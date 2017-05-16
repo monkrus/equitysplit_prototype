@@ -8,6 +8,7 @@
     "style-loader": "^0.17.0"
   },
   "dependencies": {
+    "express": "^4.15.2",
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
     "react-bootstrap-table": "^3.3.3",
