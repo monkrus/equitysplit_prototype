@@ -33,6 +33,8 @@ export default class AddButton extends Component {
     let nonCash = this.state.workedHours * hourlyRate;
     var share = nonCash + this.state.investedCash*4;
     let days = Math.floor(new Date(new Date() - new Date(this.state.startDate)) / (1000 * 60 * 60 * 24));
+    let startDate = new Date(this.state.startDate);
+    var vestedDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()+(365*this.state.vestedDate));
     if(Object.keys(this.props.totals).length === 0) {
       var totalShare = share;
       var totalFixedShare = this.state.fixedShare;
@@ -60,35 +62,10 @@ export default class AddButton extends Component {
 
     //let variableShare = share/totalShare*(1-totalFixedShare/100);
     //let sharePercent = parseFloat(this.state.fixedShare) + variableShare;
-    let efficiency = this.state.workedHours/days*(5/7)*7.5;
+    let efficiency = (this.state.workedHours/(days*(5/7)*7.5)) * 100;
     //totalShare += share;
     //totalSharePercent += sharePercent;
     //totalFixedShare += parseFloat(this.state.fixedShare);
-/*
-    var totalShare = parseFloat(this.totals.totalShare);
-    var totalFixedShare = parseFloat(this.totals.totalFixedShare);
-    let hourlyRate = priceFormatter(parseFloat(row.salary)/52.1429/37.5);
-    row.days = Math.round(new Date (new Date() - new Date(row.startDate)) / (1000 * 60 * 60 * 24));
-    row.nonCash =  priceFormatter(parseFloat(row.workedHours) * hourlyRate);
-    row.share = priceFormatter(parseFloat(row.nonCash) + row.investedCash*4);
-    totalShare += parseFloat(row.share);
-    totalFixedShare += parseFloat(row.fixedShare);
-    let variableShare = parseFloat(row.share)/totalShare*(1-totalFixedShare/100);
-    console.log('total share: ' + totalShare);
-    console.log('totalFixedShare: ' + totalFixedShare);
-    console.log('variableShare: '+variableShare);
-    console.log('variableShare: '+variableShare.toFixed(2));
-    row.sharePercent = parseFloat(row.fixedShare) + variableShare.toFixed(2);
-    row.efficiency = priceFormatter(parseFloat(row.workedHours)/(row.days*(5/7)*7.5));
-
-     //push row to state. test
-     var newMember = {'name': row.name, 'share': row.share, 'fixedShare': row.fixedShare, 'sharePercent':row.sharePercent, 'nonCash':row.nonCash, 'investedCash':row.investedCash,
-       'startDate':row.startDate, 'days':row.days, 'vestedDate':row.vestedDate, 'workedHours':row.workedHours, 'efficiency':row.efficiency, 'salary':row.salary};
-     this.members.push(newMember);
-
-     this.totals = {'totalShare':totalShare,'totalFixedShare':totalFixedShare};
-*/
-
 
     var formData = {
       //name: this.refs.Name.value
@@ -96,7 +73,7 @@ export default class AddButton extends Component {
       investedCash:this.state.investedCash,
       fixedShare:this.state.fixedShare,
       startDate:this.state.startDate,
-      vestedDate:this.state.vestedDate,
+      vestedDate:vestedDate,
       salary:this.state.salary,
       workedHours:this.state.workedHours,
       hourlyRate : hourlyRate,
@@ -116,7 +93,7 @@ export default class AddButton extends Component {
       totalWorkedHours:totalWorkedHours,
       totalSalary:totalSalary
     };
-    
+
     this.props.onAdd(formData,totalData);
   }
 
@@ -140,13 +117,13 @@ export default class AddButton extends Component {
           <FormGroup
             controlId="formBasicText" style={styles.form} >
             <Row style={styles.row}>
-              <Col componentClass={ControlLabel} sm={2} text-right>
+              <Col componentClass={ControlLabel} sm={2} className="text-right">
                 Name
               </Col>
               <Col sm={4}>
                 <FormControl type="text" name="name" value={this.state.name} placeholder="Enter Name" onChange={this.handleChange} />
               </Col>
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={2} className="text-right">
                 Fixed Share
               </Col>
               <Col sm={4}>
@@ -155,13 +132,13 @@ export default class AddButton extends Component {
             </Row>
 
             <Row style={styles.row}>
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={2} className="text-right">
                 Start Date
               </Col>
               <Col sm={4}>
                 <FormControl type="date" name="startDate" value={this.state.startDate} placeholder="Start Date" onChange={this.handleChange} />
               </Col>
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={2} className="text-right">
                 Invested Cash
               </Col>
               <Col sm={4}>
@@ -170,13 +147,13 @@ export default class AddButton extends Component {
             </Row>
 
             <Row style={styles.row}>
-              <Col componentClass={ControlLabel} sm={2}>
-                Vested Date
+              <Col componentClass={ControlLabel} sm={2} className="text-right">
+                Vested Months
               </Col>
               <Col sm={4}>
-                <FormControl type="number" name="vestedDate" value={this.state.vestedDate} placeholder="Enter Vested Date" onChange={this.handleChange} />
+                <FormControl type="number" name="vestedDate" value={this.state.vestedDate} placeholder="Enter Vested Years. ex) 2" onChange={this.handleChange} />
               </Col>
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={2} className="text-right">
                 Salary
               </Col>
               <Col sm={4}>
@@ -185,7 +162,7 @@ export default class AddButton extends Component {
             </Row>
 
             <Row style={styles.row}>
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={2} className="text-right">
                 Worked Hours
               </Col>
               <Col sm={2}>

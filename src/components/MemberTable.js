@@ -18,7 +18,7 @@ export default class MemberTable extends Component {
               <td>{formatCurrency(member.investedCash)}</td>
               <td>{member.startDate}</td>
               <td>{member.days}</td>
-              <td>{member.vestedDate}</td>
+              <td>{member.vestedDate.toISOString().substring(0, 10)}</td>
               <td>{member.workedHours}</td>
               <td>{member.efficiency.toFixed(2)}</td>
               <td>{formatCurrency(member.salary)}</td>

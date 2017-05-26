@@ -6,8 +6,8 @@ export default function Totals({totals}) {
   if(Object.keys(totals).length !== 0) {
     return(
       <tr>
-          <td>{''}</td>
           <td>{'Totals'}</td>
+          <td>{''}</td>
           <td>{formatCurrency(totals.totalShare)}</td>
           <td>{totals.totalSharePercent.toFixed(2)}</td>
           <td>{totals.totalFixedShare.toFixed(2)}</td>
