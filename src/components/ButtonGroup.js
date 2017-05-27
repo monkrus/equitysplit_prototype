@@ -148,7 +148,7 @@ export default class AddButton extends Component {
 
             <Row style={styles.row}>
               <Col componentClass={ControlLabel} sm={2} className="text-right">
-                Vested Months
+                Vested Years
               </Col>
               <Col sm={4}>
                 <FormControl type="number" name="vestedDate" value={this.state.vestedDate} placeholder="Enter Vested Years. ex) 2" onChange={this.handleChange} />

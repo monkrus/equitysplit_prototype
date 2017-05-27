@@ -4,7 +4,7 @@ import MemberTable from './MemberTable'
 import { Grid } from 'react-bootstrap';
 
 export default class DynamicCalculation extends Component {
-  
+
   constructor(props){
     super(props);
     this.members = [];
@@ -28,7 +28,7 @@ export default class DynamicCalculation extends Component {
     return(
       <Grid>
         <MemberTable { ...this.state }/>
-        <AddButton onAdd={ this.addMember } totals={this.state.totals} />
+        <AddButton onAdd={ this.addMember } totals={this.state.totals} members={this.state.members}/>
       </Grid>
     );
   }
