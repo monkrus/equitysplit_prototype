@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import MemberList from './MemberList'
 import Totals from './Totals'
 import { formatCurrency } from './Utils'
 import { Table, Checkbox } from 'react-bootstrap'
@@ -8,7 +7,7 @@ export default class MemberTable extends Component {
   render(){
     let members = this.props.members.map(function(member) {
           return(
-            <tr>
+            <tr key={member.name}>
               <th><Checkbox /></th>
               <td>{member.name}</td>
               <td>{formatCurrency(member.share)}</td>

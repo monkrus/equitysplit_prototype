@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AddButton from './ButtonGroup'
+import AddMember from './AddMember'
 import MemberTable from './MemberTable'
 import { Grid } from 'react-bootstrap';
 
@@ -15,8 +15,9 @@ export default class DynamicCalculation extends Component {
     };
   }
 
-  addMember = (member,totals) => {
-    this.members.push(member);
+  addMember = (members,totals) => {
+    //this.members.push(member);
+    this.members = members;
     this.totals = totals;
     this.setState({
       members: this.members,
@@ -28,7 +29,7 @@ export default class DynamicCalculation extends Component {
     return(
       <Grid>
         <MemberTable { ...this.state }/>
-        <AddButton onAdd={ this.addMember } totals={this.state.totals} members={this.state.members}/>
+        <AddMember onAdd={ this.addMember } totals={this.state.totals} members={this.state.members}/>
       </Grid>
     );
   }
