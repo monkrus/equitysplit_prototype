@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import { Button, Collapse } from 'react-bootstrap';
-import { FormGroup, ControlLabel, FormControl, Col, Row } from 'react-bootstrap';
+import React, { Component } from 'react'
+import { Button, Collapse } from 'react-bootstrap'
+import { FormGroup, ControlLabel, FormControl, Col, Row } from 'react-bootstrap'
+import { formatCurrency, formatLocalCurrency } from './Utils'
+import { CurrencyInput } from './CurrencyInput'
 
 export default class AddMember extends Component {
   constructor(props) {
@@ -16,12 +18,20 @@ export default class AddMember extends Component {
 
   handleChange = (e) => {
     const target = e.target;
-    let value = target.value;
+    var value = target.value;
     const name = target.name;
-    const filter = "fixedShare investedCash salary workedHours";
+
+    if (name == "salary") {
+      //removing unnecessary characters such as spaces, comma, underscores, dashes, and letters
+      value = parseFloat(value.replace(/[^0-9\.]/g, ""));
+      this.setState({ [name] : value})
+    }
+
+    const filter = "fixedShare investedCash workedHours";
     if (filter.indexOf(name) >= 0)
       value = parseFloat(value);
     this.setState({ [name]: value });
+
   }
 
   handleSubmit = (e) => {
@@ -108,13 +118,12 @@ export default class AddMember extends Component {
 
   const styles = {
     form : {
-      padding: '15px'
+      padding: '5px'
     },
     row : {
-      padding: '5px'
+      paddingTop: '5px'
     }
   };
-
 
   return(
     <div>
@@ -164,7 +173,7 @@ export default class AddMember extends Component {
                 Salary
               </Col>
               <Col sm={4}>
-                <FormControl type="number" name="salary" step="0.01" value={this.state.salary} placeholder="Enter Salary. ex) 60000" onChange={this.handleChange} />
+                <FormControl type="text" name="salary"  value={formatLocalCurrency(this.state.salary)} placeholder="Enter Salary. ex) 60000" onChange={this.handleChange}  />
               </Col>
             </Row>
 
@@ -178,9 +187,13 @@ export default class AddMember extends Component {
             </Row>
 
           </FormGroup>
+          <Row>
+            <Col smOffset={6}>
           <Button type="submit">
             Submit
           </Button>
+        </Col>
+          </Row>
         </form>
 
         </Collapse>

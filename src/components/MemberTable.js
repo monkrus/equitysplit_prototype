@@ -1,14 +1,30 @@
 import React, { Component } from 'react'
 import Totals from './Totals'
+import DeleteMember from './DeleteMember'
 import { formatCurrency } from './Utils'
 import { Table, Checkbox } from 'react-bootstrap'
 
 export default class MemberTable extends Component {
+
+  handleChange = (e) => {
+    const target = e.target;
+    const value = target.checked;
+    const name = target.name;
+
+    var members = this.props.members;
+    //it should be checked by id, not name, as a key later when we have DB
+    var checkedMember = members[name.replace('checkbox','')];
+    checkedMember.checkbox = value;
+
+    this.props.onCheck(members);
+  }
+
   render(){
-    let members = this.props.members.map(function(member) {
+
+    let members = this.props.members.map((member,index) => {
           return(
-            <tr key={member.name}>
-              <th><Checkbox /></th>
+            <tr key={index}>
+              <th><Checkbox name={'checkbox'+index} checked={member.checkbox} onChange={this.handleChange} /></th>
               <td>{member.name}</td>
               <td>{formatCurrency(member.share)}</td>
               <td>{member.sharePercent.toFixed(2)}</td>
@@ -47,6 +63,7 @@ export default class MemberTable extends Component {
           <tbody>
             {members}
             <Totals totals={this.props.totals} />
+
           </tbody>
         </Table>
     );
