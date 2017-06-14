@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatCurrency } from './Utils'
+import { formatCurrency } from '../utils/Utils'
 
 export default function Totals({totals}) {
 

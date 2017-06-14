@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Totals from './Totals'
-import DeleteMember from './DeleteMember'
-import { formatCurrency } from './Utils'
 import { Table, Checkbox } from 'react-bootstrap'
+import { Totals } from './'
+import { formatCurrency } from '../utils/Utils'
+
 
 export default class MemberTable extends Component {
 

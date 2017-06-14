@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import AddMember from './AddMember'
-import MemberTable from './MemberTable'
 import { Grid, Row, Col } from 'react-bootstrap'
-import DeleteMember from './DeleteMember'
+import { AddMember, DeleteMember} from './'
+import { MemberTable } from '../components'
+
 
 export default class DynamicCalculation extends Component {
 

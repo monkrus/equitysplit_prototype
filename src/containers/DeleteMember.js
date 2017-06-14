@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import { Button, Collapse } from 'react-bootstrap';
-import { FormGroup, ControlLabel, FormControl, Col, Row } from 'react-bootstrap';
+import React, { Component } from 'react'
+import { Button } from 'react-bootstrap'
 
 export default class DeleteMember extends Component {
 
   handleClick = (e) => {
     //find members to be deleted by checking delete flag and
-    var members = this.props.members;
+    //var members = this.props.members;
     var uncheckedMembers = this.props.members.filter((member) => {
-      return member.checkbox != true
+      return member.checkbox !== true
     })
 
     //clear checkbox values to all rows. becase it is currently use array index as key not from db key

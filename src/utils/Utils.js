@@ -1,8 +1,8 @@
 
 
 export function formatCurrency (num) {
-  if (num) {
-    if (typeof num == 'string')
+  if (num && !isNaN(num)) {
+    if (typeof num === 'string')
       num = Number(num);
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
   } else {

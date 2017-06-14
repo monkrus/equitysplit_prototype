@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
-import './App.css';
-import DynamicCalculation from './components/DynamicCalculation'
+import React, { Component } from 'react'
+import './App.css'
+import { Header, Footer } from './components'
+import { DynamicCalculation } from './containers'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Equity Split</h1>
-        <DynamicCalculation />
+        <Header />
+        <div className="app-body">
+          <h1>Equity Split</h1>
+          <DynamicCalculation />
+        </div>
+        <Footer />
       </div>
     );
   }

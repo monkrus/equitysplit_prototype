@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Collapse } from 'react-bootstrap'
-import { FormGroup, ControlLabel, FormControl, Col, Row } from 'react-bootstrap'
-import { formatCurrency, formatLocalCurrency } from './Utils'
-import { CurrencyInput } from './CurrencyInput'
+import { FormGroup, ControlLabel, FormControl, Col, Row, Button, Collapse } from 'react-bootstrap'
+import { formatCurrency, formatLocalCurrency } from '../utils/Utils'
 
 export default class AddMember extends Component {
   constructor(props) {
@@ -21,7 +19,7 @@ export default class AddMember extends Component {
     var value = target.value;
     const name = target.name;
 
-    if (name == "salary") {
+    if (name === "salary") {
       //removing unnecessary characters such as spaces, comma, underscores, dashes, and letters
       value = parseFloat(value.replace(/[^0-9\.]/g, ""));
       this.setState({ [name] : value})
@@ -64,7 +62,6 @@ export default class AddMember extends Component {
       totalDays = this.props.totals.totalDays + days;
       totalWorkedHours = this.props.totals.totalWorkedHours + this.state.workedHours;
 
-      var test = this.props.members;
       members = this.props.members.map(function(member){
         var tempObj = member;
          tempObj.variableShare = (member.share/totalShare*(1-totalFixedShare/100)) * 100;

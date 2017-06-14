@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FormControl } from 'react-bootstrap'
 import PropTypes from 'prop-types'
-import { formatCurrency, formatLocalCurrency } from './Utils'
+import { formatCurrency, formatLocalCurrency } from '../utils/Utils'
 
 export class CurrencyInput extends Component{
   constructor(props) {

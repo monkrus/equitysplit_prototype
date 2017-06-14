@@ -1,5 +1,7 @@
-import MemberList from './MemberList'
-import Table from './Table'
 import CurrencyInput from './CurrencyInput'
+import Header from './Header'
+import Footer from './Footer'
+import MemberTable from './MemberTable'
+import Totals from './Totals'
 
-export {MemberList, Table, CurrencyInput}
+export {CurrencyInput, Header, Footer, MemberTable, Totals}
