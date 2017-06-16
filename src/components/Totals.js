@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatCurrency } from '../utils/Utils'
+import { formatCurrency, formatLocalCurrency } from '../utils/Utils'
 
 export default function Totals({totals}) {
 
@@ -9,6 +9,7 @@ export default function Totals({totals}) {
           <td>{'Totals'}</td>
           <td>{''}</td>
           <td>{formatCurrency(totals.totalShare)}</td>
+          <td>{formatLocalCurrency(totals.totalShareNumbers)}</td>
           <td>{totals.totalSharePercent.toFixed(2)}</td>
           <td>{totals.totalFixedShare.toFixed(2)}</td>
           <td>{formatCurrency(totals.totalNonCash)}</td>

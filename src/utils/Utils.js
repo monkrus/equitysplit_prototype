@@ -17,3 +17,16 @@ export function formatLocalCurrency (num) {
     return '';
   }
 }
+
+export function formatCurrencyTest (num, minFractionDigits, maxFractionDigits) {
+  if (num && !isNaN(num)) {
+    if (typeof num === 'string')
+      num = Number(num);
+    return num.toLocaleString( "en-US", {
+      minimumFractionDigits:minFractionDigits,
+      maximumFractionDigits:maxFractionDigits
+    })
+  } else {
+    return '';
+  }
+}

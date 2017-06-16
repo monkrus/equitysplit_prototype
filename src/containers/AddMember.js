@@ -35,6 +35,7 @@ export default class AddMember extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     var members = [];
+    var totalShareNumbers = 10000; //it should be user(supervisor) input data later.
     let hourlyRate = this.state.salary/52.1429/37.5;
     let nonCash = this.state.workedHours * hourlyRate;
     var share = nonCash + this.state.investedCash*4;
@@ -62,10 +63,12 @@ export default class AddMember extends Component {
       totalDays = this.props.totals.totalDays + days;
       totalWorkedHours = this.props.totals.totalWorkedHours + this.state.workedHours;
 
+      //recalculate variableShare, sharePercent, shareNumbers for exsiting members
       members = this.props.members.map(function(member){
         var tempObj = member;
          tempObj.variableShare = (member.share/totalShare*(1-totalFixedShare/100)) * 100;
          tempObj.sharePercent = member.fixedShare + member.variableShare;
+         tempObj.shareNumbers = (member.variableShare + member.fixedShare)* 0.01 * totalShareNumbers;
         return tempObj;
        });
 
@@ -79,6 +82,8 @@ export default class AddMember extends Component {
       sharePercent = parseFloat(this.state.fixedShare) + variableShare;
       totalSharePercent += sharePercent;
     }
+    console.log('variableShare'+variableShare);
+    var shareNumbers = (variableShare + this.state.fixedShare)* 0.01 * totalShareNumbers;
 
     var formData = {
       name:this.state.name,
@@ -93,11 +98,13 @@ export default class AddMember extends Component {
       share:share,
       days:days,
       efficiency:efficiency,
-      sharePercent:sharePercent
+      sharePercent:sharePercent,
+      shareNumbers:shareNumbers
     };
     members.push(formData);
     var totalData = {
       totalShare:totalShare,
+      totalShareNumbers:totalShareNumbers,
       totalSharePercent:totalSharePercent,
       totalFixedShare:totalFixedShare,
       totalInvestedCash:totalInvestedCash,

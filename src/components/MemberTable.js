@@ -3,7 +3,6 @@ import { Table, Checkbox } from 'react-bootstrap'
 import { Totals } from './'
 import { formatCurrency } from '../utils/Utils'
 
-
 export default class MemberTable extends Component {
 
   handleChange = (e) => {
@@ -20,13 +19,13 @@ export default class MemberTable extends Component {
   }
 
   render(){
-
     let members = this.props.members.map((member,index) => {
           return(
             <tr key={index}>
               <th><Checkbox name={'checkbox'+index} checked={member.checkbox} onChange={this.handleChange} /></th>
               <td>{member.name}</td>
               <td>{formatCurrency(member.share)}</td>
+              <td>{Math.round(member.shareNumbers).toLocaleString( "en-US" )}</td>
               <td>{member.sharePercent.toFixed(2)}</td>
               <td>{member.fixedShare.toFixed(2)}</td>
               <td>{formatCurrency(member.nonCash)}</td>
@@ -48,6 +47,7 @@ export default class MemberTable extends Component {
               <th>#</th>
               <th>Name</th>
               <th>Share($)</th>
+              <th>Shares(#)</th>
               <th>Share(%)</th>
               <th>Fixed Share(%)</th>
               <th>Non Cash($)</th>
