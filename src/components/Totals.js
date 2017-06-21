@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { formatCurrency, formatLocalCurrency } from '../utils/Utils'
 
 export default function Totals({totals}) {
@@ -24,4 +25,8 @@ export default function Totals({totals}) {
     );
   }else
     return false
+}
+
+Totals.PropTypes = {
+  totals : PropTypes.object
 }

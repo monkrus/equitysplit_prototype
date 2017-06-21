@@ -1,17 +1,29 @@
 import React, { Component } from 'react'
-import { FormGroup, ControlLabel, FormControl, Col, Row, Button, Collapse } from 'react-bootstrap'
-import { formatCurrency, formatLocalCurrency } from '../utils/Utils'
+import ReactDOM from 'react-dom'
+import { FormGroup, ControlLabel, FormControl, Col, Row, Button, Collapse, Overlay, Tooltip } from 'react-bootstrap'
+import { MessagePopover } from '../components/'
+import { formatLocalCurrency } from '../utils/Utils'
 
 export default class AddMember extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      form: false
+      form: false,
+      validationError: false,
+      validationMsg:{vestedDate:{show:false}}
     };
   }
 
   toggle = () => {
     this.setState({ form: !this.state.form });
+  }
+
+  handleBlur = (e) => {
+    if(new Date(e.target.value) <= new Date()) {
+      this.setState({validationMsg:{[e.target.name]:{target:e.target, show:true}}})
+    } else {
+      this.setState({validationMsg:{[e.target.name]:{target:e.target, show:false}}})
+    }
   }
 
   handleChange = (e) => {
@@ -25,9 +37,19 @@ export default class AddMember extends Component {
       this.setState({ [name] : value})
     }
 
+    if (name === "vestedDate") {
+      if(new Date(value) <= new Date()) {
+        this.setState({validationMsg:{[name]:{target:target, show:true}}})
+        this.setState({validationError:true})
+      } else {
+        this.setState({validationMsg:{[name]:{target:target, show:false}}})
+        this.setState({validationError:false})
+      }
+    }
     const filter = "fixedShare investedCash workedHours";
-    if (filter.indexOf(name) >= 0)
-      value = parseFloat(value);
+    if (filter.indexOf(name) >= 0) {
+      value = parseFloat(value)
+    }
     this.setState({ [name]: value });
 
   }
@@ -41,7 +63,7 @@ export default class AddMember extends Component {
     var share = nonCash + this.state.investedCash*4;
     let days = Math.floor(new Date(new Date() - new Date(this.state.startDate)) / (1000 * 60 * 60 * 24));
     let startDate = new Date(this.state.startDate);
-    var vestedDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()+(365*this.state.vestedDate));
+    //var vestedDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()+(365*this.state.vestedDate));
     let efficiency = (this.state.workedHours/(days*(5/7)*7.5)) * 100;
     if(Object.keys(this.props.totals).length === 0) {
       var totalShare = share;
@@ -82,7 +104,6 @@ export default class AddMember extends Component {
       sharePercent = parseFloat(this.state.fixedShare) + variableShare;
       totalSharePercent += sharePercent;
     }
-    console.log('variableShare'+variableShare);
     var shareNumbers = (variableShare + this.state.fixedShare)* 0.01 * totalShareNumbers;
 
     var formData = {
@@ -90,7 +111,7 @@ export default class AddMember extends Component {
       investedCash:this.state.investedCash,
       fixedShare:this.state.fixedShare,
       startDate:this.state.startDate,
-      vestedDate:vestedDate,
+      vestedDate:this.state.vestedDate,
       salary:this.state.salary,
       workedHours:this.state.workedHours,
       hourlyRate:hourlyRate,
@@ -129,25 +150,30 @@ export default class AddMember extends Component {
     }
   };
 
+  const ErrMessages = {
+    vestedDate : 'Vested Date should be future calendar'
+  }
+
   return(
     <div>
         <Button color="primary" onClick={this.toggle}>Add</Button>
         <Collapse in={this.state.form}>
-        <form onSubmit={this.handleSubmit}>
+
+        <form onSubmit={this.handleSubmit} style={styles.form} >
           <FormGroup
-            controlId="formBasicText" style={styles.form} >
+            controlId="addMemberForm" >
             <Row style={styles.row}>
               <Col componentClass={ControlLabel} sm={2} className="text-right">
                 Name
               </Col>
               <Col sm={4}>
-                <FormControl type="text" name="name" value={this.state.name} placeholder="Enter Name" onChange={this.handleChange} />
+                <FormControl type="text" name="name" value={this.state.name} placeholder="Enter Name" onChange={this.handleChange} required />
               </Col>
               <Col componentClass={ControlLabel} sm={2} className="text-right">
                 Fixed Share(%)
               </Col>
               <Col sm={4}>
-                <FormControl type="number" name="fixedShare" step="0.01" value={this.state.fixedShare} placeholder="Enter Fixed Share(%). ex) 10" onChange={this.handleChange} />
+                <FormControl type="number" name="fixedShare" step="0.01" min="0" value={this.state.fixedShare} placeholder="Enter Fixed Share(%). ex) 10" onChange={this.handleChange} required />
               </Col>
             </Row>
 
@@ -156,28 +182,36 @@ export default class AddMember extends Component {
                 Start Date
               </Col>
               <Col sm={4}>
-                <FormControl type="date" name="startDate" value={this.state.startDate} placeholder="Start Date" onChange={this.handleChange} />
+                <FormControl type="date" name="startDate" value={this.state.startDate} placeholder="Start Date" onChange={this.handleChange} required />
               </Col>
               <Col componentClass={ControlLabel} sm={2} className="text-right">
                 Invested Cash
               </Col>
               <Col sm={4}>
-                <FormControl type="number" name="investedCash" step="0.01" value={this.state.investedCash} placeholder="Enter Invested Cash. ex) 300" onChange={this.handleChange} />
+                <FormControl type="number" name="investedCash" step="0.01" min="0" value={this.state.investedCash} placeholder="Enter Invested Cash. ex) 300" onChange={this.handleChange} required />
               </Col>
             </Row>
 
             <Row style={styles.row}>
               <Col componentClass={ControlLabel} sm={2} className="text-right">
-                Vested Years
+                Vested Date
               </Col>
               <Col sm={4}>
-                <FormControl type="number" name="vestedDate" value={this.state.vestedDate} placeholder="Enter Vested Years. ex) 2" onChange={this.handleChange} />
+                <FormControl type="date" name="vestedDate" value={this.state.vestedDate} placeholder="Vested Date" onChange={this.handleChange} required />
+                  <Overlay
+                    show={this.state.validationMsg.vestedDate.show}
+                    target={this.state.validationMsg.vestedDate.target}
+                    placement="bottom"
+                    container={this}
+                  >
+                  <Tooltip>{ErrMessages.vestedDate}</Tooltip>
+                </Overlay>
               </Col>
               <Col componentClass={ControlLabel} sm={2} className="text-right">
                 Salary
               </Col>
               <Col sm={4}>
-                <FormControl type="text" name="salary"  value={formatLocalCurrency(this.state.salary)} placeholder="Enter Salary. ex) 60000" onChange={this.handleChange}  />
+                <FormControl type="text" name="salary"  value={formatLocalCurrency(this.state.salary)} placeholder="Enter Salary. ex) 60000" onChange={this.handleChange} required />
               </Col>
             </Row>
 
@@ -186,17 +220,17 @@ export default class AddMember extends Component {
                 Worked Hours
               </Col>
               <Col sm={2}>
-                <FormControl type="number" name="workedHours" step="0.01" value={this.state.workedHours} placeholder="" onChange={this.handleChange} />
+                <FormControl type="number" name="workedHours" step="0.01" min="0" value={this.state.workedHours} placeholder="" onChange={this.handleChange} required />
               </Col>
             </Row>
 
           </FormGroup>
           <Row>
             <Col smOffset={6}>
-          <Button type="submit">
-            Submit
-          </Button>
-        </Col>
+              <Button type="submit" disabled={this.state.validationError}>
+                Submit
+              </Button>
+            </Col>
           </Row>
         </form>
 

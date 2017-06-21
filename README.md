@@ -1,4 +1,4 @@
-# Equity Split Prototype
+# Equity Split MVP
 
 ## Set Up
 Ensure NPM is installed.
@@ -9,4 +9,4 @@ npm install
 npm start
 ```
 
-Now open `https://localhost:3000` in your browser. 
+Now open `https://localhost:3000` in your browser.

@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Navbar, Nav, NavItem, Image } from 'react-bootstrap'
 import logo from '../images/full_cb_logo_rounded.png'
 
-export default class Header extends Component {
-  render() {
+export default function Header(props) {
     const styles = {
       navbar : {
         minHeight: '60px'
@@ -26,5 +25,4 @@ export default class Header extends Component {
         </Nav>
       </Navbar>
     )
-  }
 }

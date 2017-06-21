@@ -10,9 +10,9 @@ export default class MemberTable extends Component {
     const value = target.checked;
     const name = target.name;
 
-    var members = this.props.members;
+    let members = this.props.members;
     //it should be checked by id, not name, as a key later when we have DB
-    var checkedMember = members[name.replace('checkbox','')];
+    let checkedMember = members[name.replace('checkbox','')];
     checkedMember.checkbox = value;
 
     this.props.onCheck(members);
@@ -32,7 +32,7 @@ export default class MemberTable extends Component {
               <td>{formatCurrency(member.investedCash)}</td>
               <td>{member.startDate}</td>
               <td>{member.days}</td>
-              <td>{member.vestedDate.toISOString().substring(0, 10)}</td>
+              <td>{member.vestedDate}</td>
               <td>{member.workedHours}</td>
               <td>{member.efficiency.toFixed(2)}</td>
               <td>{formatCurrency(member.salary)}</td>
@@ -63,7 +63,6 @@ export default class MemberTable extends Component {
           <tbody>
             {members}
             <Totals totals={this.props.totals} />
-
           </tbody>
         </Table>
     );

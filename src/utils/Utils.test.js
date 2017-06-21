@@ -26,9 +26,12 @@ describe('formatCurrency', () => {
 describe('formatCurrencyTest', () => {
 
   it('should be a number with thousand seperator and digits after decimal points based on parameter', () => {
+    ['','x'].forEach(t => {
+      expect(formatCurrencyTest(t)).toBe('')
+    })
     expect(formatCurrencyTest()).toBe('')
-    expect(formatCurrencyTest('')).toBe('')
-    expect(formatCurrencyTest('x')).toBe('')
+    // expect(formatCurrencyTest('')).toBe('')
+    // expect(formatCurrencyTest('x')).toBe('')
     expect(formatCurrencyTest(undefined)).toBe('')
     expect(formatCurrencyTest(10.10,2)).toBe('10.10')
     expect(formatCurrencyTest(10.111,2,2)).toBe('10.11')

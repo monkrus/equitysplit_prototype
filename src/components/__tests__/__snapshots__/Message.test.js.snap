@@ -1,0 +1,26 @@
+exports[`MessagePopover renders and matches snapshot 1`] = `
+<div
+  className="popover bottom"
+  id="t1"
+  role="tooltip"
+  style={
+    Object {
+      "display": "block",
+      "left": undefined,
+      "top": undefined,
+    }
+  }>
+  <div
+    className="arrow"
+    style={
+      Object {
+        "left": undefined,
+        "top": undefined,
+      }
+    } />
+  <div
+    className="popover-content">
+    test
+  </div>
+</div>
+`;
