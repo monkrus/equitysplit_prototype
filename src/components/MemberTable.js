@@ -41,7 +41,7 @@ export default class MemberTable extends Component {
       });
 
     return(
-      <Table bordered>
+      <Table bordered responsive>
           <thead>
             <tr>
               <th>#</th>
