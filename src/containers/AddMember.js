@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import { FormGroup, ControlLabel, FormControl, Col, Row, Button, Collapse, Overlay, Tooltip } from 'react-bootstrap'
-import { MessagePopover } from '../components/'
 import { formatLocalCurrency } from '../utils/Utils'
 
 export default class AddMember extends Component {
@@ -62,7 +60,7 @@ export default class AddMember extends Component {
     let nonCash = this.state.workedHours * hourlyRate;
     var share = nonCash + this.state.investedCash*4;
     let days = Math.floor(new Date(new Date() - new Date(this.state.startDate)) / (1000 * 60 * 60 * 24));
-    let startDate = new Date(this.state.startDate);
+    //let startDate = new Date(this.state.startDate);
     //var vestedDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()+(365*this.state.vestedDate));
     let efficiency = (this.state.workedHours/(days*(5/7)*7.5)) * 100;
     if(Object.keys(this.props.totals).length === 0) {

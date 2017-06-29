@@ -23,8 +23,9 @@ export default function Header(props) {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-            <NavItem eventKey={1}><Link to="/login">Log In</Link></NavItem>
-            <NavItem eventKey={2}>Sign Up</NavItem>
+            <NavItem eventKey={1}><Link to="/home">Home </Link></NavItem>
+            <NavItem eventKey={2}><Link to="/login">Log In</Link></NavItem>
+            <NavItem eventKey={3}>Sign Up</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
