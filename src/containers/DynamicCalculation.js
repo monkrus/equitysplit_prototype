@@ -50,8 +50,8 @@ export default class DynamicCalculation extends Component {
     };
 
     return(
-      <Grid>
-        <MemberTable { ...this.state } onCheck={this.onCheck}/>
+      <div>
+        <MemberTable { ...this.state } onCheck={this.onCheck} />
         <Row style={styles.row}>
           <Col md={1}>
             <DeleteMember onDelete={this.deleteMember} members={this.state.members} />
@@ -60,7 +60,7 @@ export default class DynamicCalculation extends Component {
             <AddMember onAdd={this.addMember} totals={this.state.totals} members={this.state.members}/>
           </Col>
         </Row>
-      </Grid>
+      </div>
     );
   }
 }

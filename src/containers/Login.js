@@ -1,19 +1,59 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Grid, FormGroup, Row, Col, FormControl, ControlLabel, Button, Image } from 'react-bootstrap'
+import { loginUser, loginUserAndGetUserInfo } from '../actions/authentication'
 import loginImg from '../images/teamwork.jpg'
+import { API_URL } from '../const.js'
 
-export default function Login(props) {
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      credentials: {email:'', password:''}
+    };
+  }
+
+  handleChange = (e) => {
+    const name = e.target.name
+    const credentials = this.state.credentials
+    credentials[name] = e.target.value
+    this.setState({ credentials: credentials})
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    //this.props.dispatch(loginUser(this.state.credentials));
+    this.props.dispatch(loginUserAndGetUserInfo(this.state.credentials));
+
+    // const url = `${API_URL}/auth/signin`
+    // const request = new Request(url, {
+    //   method: 'POST',
+    //   headers: new Headers({
+    //     'Content-Type': 'application/json'
+    //   }),
+    //   body: JSON.stringify({
+    //     email: this.state.email,
+    //     password: this.state.password
+    //   })
+    // })
+    // fetch(request)
+    //   .then(response => { console.log(response.json()) })
+    //   .catch(error => { return error;})
+  }
+
+  render(){
     return (
-      <Grid>
+      <div>
         <Row>
           <Col md={6}>
-            <form>
+            <form onSubmit={this.handleSubmit}>
               <FormGroup controlId="formEmail">
                 <Col componentClass={ControlLabel} sm={2}>
                   Email
                 </Col>
                 <Col sm={10}>
-                  <FormControl type="email" placeholder="Email" />
+                  <FormControl type="email" name="email" placeholder="Email" value={this.state.credentials.email} onChange={this.handleChange} required />
                 </Col>
               </FormGroup>
 
@@ -22,7 +62,7 @@ export default function Login(props) {
                   Password
                 </Col>
                 <Col sm={10}>
-                  <FormControl type="password" placeholder="Password" />
+                  <FormControl type="password" name="password" placeholder="Password" value={this.state.credentials.password} onChange={this.handleChange} required />
                 </Col>
               </FormGroup>
 
@@ -39,6 +79,9 @@ export default function Login(props) {
             <Image src={loginImg} responsive rounded />
           </Col>
         </Row>
-      </Grid>
+      </div>
     )
+  }
 }
+
+export default connect()(Login);
