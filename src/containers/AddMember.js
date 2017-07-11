@@ -10,7 +10,10 @@ export default class AddMember extends Component {
     this.state = {
       form: false,
       validationError: false,
-      validationMsg:{vestedDate:{show:false}}
+      validationMsg:{
+        startDate:{show:false},
+        vestedDate:{show:false}
+      }
     };
   }
 
@@ -18,15 +21,7 @@ export default class AddMember extends Component {
     this.setState({ form: !this.state.form });
   }
 
-  handleBlur = (e) => {
-    if(new Date(e.target.value) <= new Date()) {
-      this.setState({validationMsg:{[e.target.name]:{target:e.target, show:true}}})
-    } else {
-      this.setState({validationMsg:{[e.target.name]:{target:e.target, show:false}}})
-    }
-  }
-
-  handleChange = (e) => {
+    handleChange = (e) => {
     const target = e.target;
     var value = target.value;
     const name = target.name;
@@ -37,12 +32,38 @@ export default class AddMember extends Component {
       this.setState({ [name] : value})
     }
 
-    if (name === "vestedDate") {
-      if(new Date(value) <= new Date()) {
-        this.setState({validationMsg:{[name]:{target:target, show:true}}})
+    if (name === "startDate") {
+      if(new Date(value) > new Date()) {
+        this.setState({
+          validationMsg:{
+            ...this.state.validationMsg,
+            [name]:{target:target, show:true}
+          }})
         this.setState({validationError:true})
       } else {
-        this.setState({validationMsg:{[name]:{target:target, show:false}}})
+        this.setState({
+          validationMsg:{
+            ...this.state.validationMsg,
+            [name]:{target:target, show:false}
+          }})
+        this.setState({validationError:false})
+      }
+    }
+
+    if (name === "vestedDate") {
+      if(new Date(value) <= new Date()) {
+        this.setState({
+          validationMsg:{
+            ...this.state.validationMsg,
+            [name]:{target:target, show:true}
+          }})
+        this.setState({validationError:true})
+      } else {
+        this.setState({
+          validationMsg:{
+            ...this.state.validationMsg,
+            [name]:{target:target, show:false}
+          }})
         this.setState({validationError:false})
       }
     }
@@ -63,7 +84,6 @@ export default class AddMember extends Component {
     var share = nonCash + this.state.investedCash*4;
     let days = Math.floor(new Date(new Date() - new Date(this.state.startDate)) / (1000 * 60 * 60 * 24));
     let startDate = new Date(this.state.startDate);
-    //var vestedDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()+(365*this.state.vestedDate));
     let efficiency = (this.state.workedHours/(days*(5/7)*7.5)) * 100;
     if(Object.keys(this.props.totals).length === 0) {
       var totalShare = share;
@@ -151,6 +171,7 @@ export default class AddMember extends Component {
   };
 
   const ErrMessages = {
+    startDate : 'Start Date should be past calendar or today',
     vestedDate : 'Vested Date should be future calendar'
   }
 
@@ -183,6 +204,14 @@ export default class AddMember extends Component {
               </Col>
               <Col sm={4}>
                 <FormControl type="date" name="startDate" value={this.state.startDate} placeholder="Start Date" onChange={this.handleChange} required />
+                  <Overlay
+                    show={this.state.validationMsg.startDate.show}
+                    target={this.state.validationMsg.startDate.target}
+                    placement="bottom"
+                    container={this}
+                  >
+                  <Tooltip>{ErrMessages.startDate}</Tooltip>
+                </Overlay>
               </Col>
               <Col componentClass={ControlLabel} sm={2} className="text-right">
                 Invested Cash

@@ -19,6 +19,12 @@ export default class MemberTable extends Component {
   }
 
   render(){
+    const styles = {
+      table : {
+        paddingTop: '100px'
+      }
+    }
+
     let members = this.props.members.map((member,index) => {
           return(
             <tr key={index}>
@@ -41,7 +47,7 @@ export default class MemberTable extends Component {
       });
 
     return(
-      <Table bordered responsive>
+      <Table bordered responsive style={styles.table}>
           <thead>
             <tr>
               <th>#</th>
