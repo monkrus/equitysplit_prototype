@@ -10,7 +10,7 @@ import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-r
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import rootReducer from './reducers'
 import { Login } from './containers'
-import { Header } from './components'
+import { Header, Home } from './components'
 import { NotFound } from './components/common'
 
 
@@ -25,7 +25,7 @@ ReactDOM.render(
       <div>
         <Header />
         <div className="container">
-          <Route exact path="/" component={Login}/>
+          <Route exact path="/" component={Home}/>
           <Route path="/user" component={App}/>
           <Route path="/login" component={Login}/>
           <Route path="/signup" component={NotFound}/>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import { FormGroup, ControlLabel, FormControl, Col, Row, Button, Collapse, Overlay, Tooltip } from 'react-bootstrap'
-import { MessagePopover } from '../components/'
 import { formatLocalCurrency } from '../utils/Utils'
 
 export default class AddMember extends Component {
