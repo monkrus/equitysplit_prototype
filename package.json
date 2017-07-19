@@ -11,16 +11,18 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "express": "^4.15.2",
-    "jquery": "^3.2.1",
+    "history": "^4.6.3",
+    "jwt-decode": "^2.2.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
-    "react-addons-css-transition-group": "^15.5.2",
-    "react-addons-transition-group": "^15.5.2",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",
+    "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
-    "reactstrap": "^4.6.2"
+    "react-router-redux": "^5.0.0-alpha.6",
+    "redux": "^3.7.1",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

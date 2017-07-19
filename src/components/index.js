@@ -1,8 +1,9 @@
+import Analytics from './Analytics'
 import Header from './Header'
-import Footer from './Footer'
 import MessagePopover from './Message'
 import MemberTable from './MemberTable'
+import StatusBar from './StatusBar'
 import Totals from './Totals'
 import Home from './HomePage'
 
-export {Header, Footer, MessagePopover,MemberTable, Totals,Home}
+export { Analytics, Header, MessagePopover,MemberTable, StatusBar, Totals, Home}

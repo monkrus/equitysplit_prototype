@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from './Footer';
+import Footer from './common/Footer';
 
 
 export default function Home () {
@@ -85,4 +85,3 @@ export default function Home () {
 
     return body();
 }
-
