@@ -25,21 +25,6 @@ class Login extends Component {
     e.preventDefault()
     //this.props.dispatch(loginUser(this.state.credentials));
     this.props.dispatch(loginUserAndGetUserInfo(this.state.credentials));
-
-    // const url = `${API_URL}/auth/signin`
-    // const request = new Request(url, {
-    //   method: 'POST',
-    //   headers: new Headers({
-    //     'Content-Type': 'application/json'
-    //   }),
-    //   body: JSON.stringify({
-    //     email: this.state.email,
-    //     password: this.state.password
-    //   })
-    // })
-    // fetch(request)
-    //   .then(response => { console.log(response.json()) })
-    //   .catch(error => { return error;})
   }
 
   render(){

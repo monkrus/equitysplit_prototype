@@ -1,8 +1,10 @@
 import * as types from './types'
 import { API_URL } from '../const.js'
+import { push } from 'react-router-redux'
 
 function loginSuccess(token) {
-  sessionStorage.setItem('token', token);
+  sessionStorage.setItem('token', token)
+  //dispatch(push('/user'))
   return {
     type: types.LOGIN_SUCCESS,
     token : token
@@ -29,6 +31,14 @@ export function loginUser(credentials) {
       .then(response => response.json())
       .then(json => dispatch(loginSuccess(json.token)))
       .catch(error => dispatch(loginFail(error)))
+  }
+}
+
+export function logoutUser() {
+  sessionStorage.removeItem('token')
+  //dispatch(push('/'))
+  return {
+    type: types.LOGOUT
   }
 }
 
@@ -67,7 +77,6 @@ export function loginUserAndGetUserInfo(credentials) {
     return dispatch(loginUser(credentials))
       .then(response => {
         const userJWT = getState().authentication.token
-        console.log('userJWT in action:'+userJWT)
         return dispatch(getUserInfo(userJWT))
       })
    }

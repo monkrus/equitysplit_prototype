@@ -1,4 +1,5 @@
-import { LOGIN_SUCCESS,  LOGIN_FAIL } from '../actions/types'
+import { LOGIN_SUCCESS,  LOGIN_FAIL, LOGOUT } from '../actions/types'
+import { push } from 'react-router-redux'
 
 const initialState = {
   error: '',
@@ -9,10 +10,11 @@ const initialState = {
 export default function authentication(state = initialState, action) {
   switch(action.type) {
     case LOGIN_SUCCESS:
-      console.log('token in reducer:'+action.token)
       return { ...state, token: action.token, authenticated: true }
     case LOGIN_FAIL:
       return { ...state, error: action.error, authenticated: false }
+    case LOGOUT:
+      return { ...state, authenticated: false }
     default:
       return state
   }
